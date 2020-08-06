@@ -1,1 +1,2 @@
-# rock-paper-scissors
+# rock-paper-scissors game
+Console only for now...
