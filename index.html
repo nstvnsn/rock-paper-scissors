@@ -20,36 +20,55 @@
     return userInput.toLocaleUpperCase();
   }
 
-  function determineWinner(computerSel, playerSel) {
-    let [cSel, pSel] = [computerSel, playerSel];
+  function determineWinner(computerSelection, playerSelection) {
+    let [cSel, pSel] = [computerSelection, playerSelection];
     let res;
-    if(cSel === "ROCK" && !(pSel === "ROCK")) {
-      if(pSel === "PAPER") {
-        console.log(`You win -- ${pSel} beats ${cSel}!`);
-        res = "PLAYER"
-      } else if(pSel === "SCISSORS") {
-        console.log(`You lose -- ${cSel} beats ${pSel}!`);
-        res = "COMPUTER";
-      }
-    } else if(cSel === "PAPER" && !(pSel === "PAPER")) {
-      if(pSel === "ROCK") {
-        console.log(`You lose -- ${cSel} beats ${pSel}!`);
-        res = "COMPUTER";
-      } else if(pSel === "SCISSORS") {
-        console.log(`You win -- ${pSel} beats ${cSel}!`);
-        res = "PLAYER";
-      }
-    } else if(cSel === "SCISSORS" && !(pSel === "SCISSORS")) {
-      if(pSel === "PAPER") {
-        console.log(`You lose -- ${cSel} beats ${pSel}!`);
-        res = "COMPUTER";
-      } else if(pSel === "ROCK") {
-        console.log(`You win -- ${pSel} beats ${cSel}!`);
-        res = "PLAYER";
-      }
-    } else {
-      console.log(`It's a draw -- both picked ${pSel}!`);
-      res = "DRAW";
+
+    let cSelNum = (cSel === "ROCK" && pSel !== "ROCK") ? 0 :
+        (cSel === "PAPER" && pSel !== "PAPER") ? 1 :
+        (cSel === "SCISSORS" && pSel !== "SCISSORS") ? 2 : null;
+        // 0 === ROCK, 1 === PAPER, 2 === SCISSORS
+    let pSelNum = pSel === "ROCK" ? 0 :
+        pSel === "PAPER" ? 1 : 2;
+        // 0 === ROCK, 1 === PAPER, 2 === SCISSORS
+
+    switch(cSelNum) {
+      case 0:
+        switch(pSelNum) {
+          case 1: // Rock v. Paper
+            console.log(`You win -- ${pSel} beats ${cSel}!`);
+            res = "PLAYER";
+            break;
+          case 2: // Rock v. Scissors
+            console.log(`You lose -- ${cSel} beats ${pSel}!`);
+            res = "COMPUTER";
+        }
+        break;
+      case 1:
+        switch(pSelNum) {
+          case 0: // Paper v. Rock
+            console.log(`You lose -- ${cSel} beats ${pSel}!`);
+            res = "COMPUTER";
+            break;
+          case 2: // Paper v. Scissors
+            console.log(`You win -- ${pSel} beats ${cSel}!`);
+            res = "PLAYER";
+        }
+        break;
+      case 2:
+        switch(pSelNum) {
+          case 0: // Scissors v. Rock
+            console.log(`You win -- ${pSel} beats ${cSel}!`);
+            res = "PLAYER";
+            break;
+          case 1: // Scissors v. Paper
+            console.log(`You lose -- ${cSel} beats ${pSel}!`);
+            res = "COMPUTER";
+        }
+        break;
+      default:
+        console.log(`It's a draw -- both picked ${pSel}!`);
+        res = "DRAW";
     }
     return res;
   }
@@ -78,5 +97,4 @@
   }
 
  game();
-
 </script>
