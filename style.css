@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+  background-color: rgb(233, 233, 233);
+  height: 100%;
+  width: auto;
+}
+
+header {
+  position: relative;
+  height: 5em;
+  text-align: center;
+  width: 100%;
+}
+
+header > span {
+  font-size: 2em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+}
+
+.button {
+  background-color: rgb(136, 134, 255);
+  border: rgb(39, 121, 31) solid 0.1em;
+  border-radius: 10%;
+  box-sizing: border-box;
+  display: table-cell;
+  height: 2em;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  width: 7em;
+}
+
+.reset {
+  width: 100%;
+}
+
+.resetButton {
+  background-color: rgba(139, 0, 0, 0.77);
+  display: block;
+  height: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 7em;
+}
+
+.gameButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.gameOutput {
+  border: 1px solid black;
+  text-align: center;
+  width: 15em;
+}
+
+.hidden {
+  display: none;
+}
+
+.spacer {
+  box-sizing: border-box;
+  width: 2em;
+}
+
+.wrapper {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  overflow: hidden;
+  padding: 2em 0 2em 0;
+  transform: translate(-50%, -50%);
+  height: 400px;
+  width: 75vw;
+}
