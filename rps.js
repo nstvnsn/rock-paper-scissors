@@ -1,9 +1,19 @@
 const state = {
   wins: 0,
   losses: 0,
-  ties: 0,
-  round: 0,
 };
+
+const btnSelection = document.querySelectorAll("button[class=button]");
+const btnReset = document.querySelector("button.resetButton");
+const winStatement = document.querySelector("div.winStatement");
+const winsPlaceHolder = document.querySelector("span.wins>span");
+const lossesPlaceHolder = document.querySelector("span.losses>span");
+
+btnSelection.forEach((element) => {
+  element.addEventListener("click", playRoundHandler);
+});
+
+btnReset.addEventListener("click", resetScore);
 
 function computerPlay() {
   let rand = Math.floor((Math.random() * 101) % 3);
@@ -93,40 +103,65 @@ function playRoundHandler(event) {
   );
   incrementScore(result);
   if (state.wins >= 5 || state.losses >= 5) {
-    //TRIGGER GAME WINNING FUNCTION AND SKIP FINAL SELECTION ANIMATIONS
+    gameOverAnimation();
+    return;
   }
   selectionAnimation(message);
 }
 
 function incrementScore(result) {
   if (result === "DRAW") return;
-  const wins = document.querySelector("span.wins>span");
-  const losses = document.querySelector("span.losses>span");
 
   if (result === "PLAYER") {
     state.wins++;
-    wins.textContent = state.wins.toString();
+    winsPlaceHolder.textContent = state.wins.toString();
   } else if (result === "COMPUTER") {
     state.losses++;
-    losses.textContent = state.losses.toString();
+    lossesPlaceHolder.textContent = state.losses.toString();
   }
 }
 
-function selectionAnimation(message) {
-  const winStatement = document.querySelector("div.winStatement");
-  toggleButtons();
+function gameOverAnimation() {
+  let winner = state.wins >= 5 ? "PLAYER" : "COMPUTER";
+
+  toggleSelectionButtons();
+  toggleResetButton();
+  winStatement.textContent = `Game over! ${winner} has won!`;
   winStatement.classList.remove("hidden");
-  winStatement.textContent = message;
 
   setTimeout(() => {
     winStatement.textContent = "";
     winStatement.classList.add("hidden");
-    toggleButtons();
-  }, 2500);
+    toggleResetButton();
+  }, 1500);
 }
 
-function toggleButtons() {
-  const buttons = document.querySelectorAll("button.button");
+function resetScore() {
+  for (key in state) {
+    state[key] = 0;
+  }
+  winsPlaceHolder.textContent = "0";
+  lossesPlaceHolder.textContent = "0";
+  toggleSelectionButtons();
+}
+
+function selectionAnimation(message) {
+  const winStatement = document.querySelector("div.winStatement");
+  toggleSelectionButtons();
+  toggleResetButton();
+  winStatement.textContent = message;
+  winStatement.classList.remove("hidden");
+
+  setTimeout(() => {
+    winStatement.textContent = "";
+    winStatement.classList.add("hidden");
+    toggleSelectionButtons();
+    toggleResetButton();
+  }, 1500);
+}
+
+function toggleSelectionButtons() {
+  const buttons = document.querySelectorAll("button[class='button']");
   buttons.forEach((element) => {
     if (element.disabled == true) {
       element.disabled = false;
@@ -136,36 +171,11 @@ function toggleButtons() {
   });
 }
 
-const btnSelection = document.querySelectorAll("button[class=button]");
-const btnReset = document.querySelector("button.resetButton");
-
-btnSelection.forEach((element) => {
-  element.addEventListener("click", playRoundHandler);
-});
-
-// function game() {
-//   let score = { player: 0, computer: 0 };
-//   for (let i = 0; i < 5; i++) {
-//     let winner = playRoundHandler();
-//     if (winner === "PLAYER") {
-//       score.player++;
-//     } else if (winner === "COMPUTER") {
-//       score.computer++;
-//     }
-//   }
-//   if (score.computer > score.player) {
-//     console.log(
-//       `Nice try, the computer beat you ${score.computer} - ${score.player}`
-//     );
-//   } else if (score.player > score.computer) {
-//     console.log(
-//       `Well done, you beat the computer ${score.player} - ${score.computer}`
-//     );
-//   } else {
-//     console.log(
-//       `You both played well, its a tie ${score.player} - ${score.computer}`
-//     );
-//   }
-// }
-
-// game();
+function toggleResetButton() {
+  const button = document.querySelector("button.resetButton");
+  if (button.disabled === true) {
+    button.disabled = false;
+  } else {
+    button.disabled = true;
+  }
+}
